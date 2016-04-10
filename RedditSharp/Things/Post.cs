@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Authentication;
 using System.Threading.Tasks;
-using System.Web;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -329,9 +328,12 @@ namespace RedditSharp.Things
 
             if (limit.HasValue)
             {
-                var query = HttpUtility.ParseQueryString(string.Empty);
-                query.Add("limit", limit.Value.ToString());
-                url = string.Format("{0}?{1}", url, query);
+                // There's a lot of ways to do this, but this is the only place in the code where 
+                // HttpUtility.ParseQueryString() is used, and this is the simplest.
+                // If it were used a lot, we could create a utility method to do it.
+                //var query = HttpUtility.ParseQueryString(string.Empty);
+                //query.Add("limit", limit.Value.ToString());
+                url = string.Format("{0}?{1}", url, "limit=" + limit.Value.ToString());
             }
 
             var request = WebAgent.CreateGet(url);

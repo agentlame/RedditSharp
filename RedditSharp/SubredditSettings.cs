@@ -1,4 +1,4 @@
-﻿using System.Web;
+﻿using System.Net;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RedditSharp.Things;
@@ -46,7 +46,7 @@ namespace RedditSharp
             var data = json["data"];
             AllowAsDefault = data["default_set"].ValueOrDefault<bool>();
             Domain = data["domain"].ValueOrDefault<string>();
-            Sidebar = HttpUtility.HtmlDecode(data["description"].ValueOrDefault<string>() ?? string.Empty);
+            Sidebar = WebUtility.HtmlDecode(data["description"].ValueOrDefault<string>() ?? string.Empty);
             Language = data["language"].ValueOrDefault<string>();
             Title = data["title"].ValueOrDefault<string>();
             WikiEditKarma = data["wiki_edit_karma"].ValueOrDefault<int>();
@@ -54,7 +54,7 @@ namespace RedditSharp
             UseDomainSidebar = data["domain_sidebar"].ValueOrDefault<bool>();
             HeaderHoverText = data["header_hover_text"].ValueOrDefault<string>();
             NSFW = data["over_18"].ValueOrDefault<bool>();
-            PublicDescription = HttpUtility.HtmlDecode(data["public_description"].ValueOrDefault<string>() ?? string.Empty);
+            PublicDescription = WebUtility.HtmlDecode(data["public_description"].ValueOrDefault<string>() ?? string.Empty);
             SpamFilter = new SpamFilterSettings
             {
                 LinkPostStrength = GetSpamFilterStrength(data["spam_links"].ValueOrDefault<string>()),

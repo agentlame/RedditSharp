@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
-using System.Web;
+using System.Net;
 using RedditSharp.Things;
+
 
 namespace RedditSharp
 {
@@ -24,7 +25,7 @@ namespace RedditSharp
         {
             Images = new List<SubredditImage>();
             var data = json["data"];
-            CSS = HttpUtility.HtmlDecode(data["stylesheet"].Value<string>());
+            CSS = WebUtility.HtmlDecode(data["stylesheet"].Value<string>());
             foreach (var image in data["images"])
             {
                 Images.Add(new SubredditImage(

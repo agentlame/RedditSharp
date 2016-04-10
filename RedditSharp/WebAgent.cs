@@ -7,7 +7,6 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
-using System.Web;
 using Newtonsoft.Json.Linq;
 
 namespace RedditSharp
@@ -296,12 +295,12 @@ namespace RedditSharp
                 var attr = property.GetCustomAttributes(typeof(RedditAPINameAttribute), false).FirstOrDefault() as RedditAPINameAttribute;
                 string name = attr == null ? property.Name : attr.Name;
                 var entry = Convert.ToString(property.GetValue(data, null));
-                value += name + "=" + HttpUtility.UrlEncode(entry).Replace(";", "%3B").Replace("&", "%26") + "&";
+                value += name + "=" + WebUtility.UrlEncode(entry).Replace(";", "%3B").Replace("&", "%26") + "&";
             }
             for (int i = 0; i < additionalFields.Length; i += 2)
             {
                 var entry = Convert.ToString(additionalFields[i + 1]) ?? string.Empty;
-                value += additionalFields[i] + "=" + HttpUtility.UrlEncode(entry).Replace(";", "%3B").Replace("&", "%26") + "&";
+                value += additionalFields[i] + "=" + WebUtility.UrlEncode(entry).Replace(";", "%3B").Replace("&", "%26") + "&";
             }
             value = value.Remove(value.Length - 1); // Remove trailing &
             var raw = Encoding.UTF8.GetBytes(value);
